@@ -1,7 +1,7 @@
 # src/tests/conftest.py
 
 import pytest
-from src import app, db
+from src import create_app, db
 
 #n pytest, “fixtures” are functions you define that serve this purpose. But they don’t have to be limited to just the arrange steps. 
 # They can provide the act step, as well, and this can be a powerful technique for designing more complex tests, especially given how pytest’s fixture system works. 
@@ -15,9 +15,10 @@ from src import app, db
 
 @pytest.fixture(scope='module')
 def test_app():
+    app = create_app()  # new
     app.config.from_object('src.config.TestingConfig')
     with app.app_context():
-        yield app #Testing occurs here
+        yield app  # testing happens here
 
 
 @pytest.fixture(scope='module')
